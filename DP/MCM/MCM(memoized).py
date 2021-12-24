@@ -1,0 +1,28 @@
+import sys
+
+arr=[40,20,30,10,30]
+
+mat = [[-1 for i in range(1000)]for j in range(1000)]
+
+def solve(i,j):
+    if(i>=j):
+        return(0)
+
+    if(mat[i][j] != -1):
+        return( mat[i][j] )
+    
+    minans = sys.maxsize
+    for k in range(i,j):
+        temp_ans = solve(i,k) + solve(k+1,j) + (arr[i-1]*arr[k]*arr[j])
+        minans = min(minans,temp_ans)
+    mat[i][j] = minans
+    return(mat[i][j])
+
+def disp( n ):
+    for i in range(n):
+        for j in range(n):
+            print(mat[i][j],end="\t")
+        print()
+
+print(solve(1,len(arr)-1))
+disp(len(arr))
